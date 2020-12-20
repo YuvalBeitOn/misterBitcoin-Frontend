@@ -1,0 +1,15 @@
+.contact-filter {
+    margin-bottom: 2rem;
+
+    input {
+        padding: 12px 18px;
+        border-radius: 5px;
+        outline: none;
+        border: 0.5px solid gray;
+        width: 300px;
+        &::placeholder {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1.2rem;
+        }
+    }
+}

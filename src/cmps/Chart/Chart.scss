@@ -1,0 +1,27 @@
+.chart {
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px 20px 20px 10px;
+  color: rgb(41, 41, 41);
+
+  h2 {
+    margin-bottom: 10px;
+    text-align: center;
+
+  }
+
+  .desc {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      text-align: center;
+  }
+
+
+  .recharts-legend-wrapper {
+    position: static!important;
+    width: unset!important;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+}

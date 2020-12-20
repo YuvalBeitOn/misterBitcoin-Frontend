@@ -1,0 +1,6 @@
+.move-preview {
+    font-size: 1.2rem;
+  >*:not(:last-child) {
+      margin-bottom: 5px;
+  }
+}

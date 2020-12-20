@@ -1,0 +1,20 @@
+.contact-page {
+    min-height: calc(100vh - 40px); 
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+
+    .add-contact {
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin-left: 15px;
+        background-color: rgb(22, 82, 240);
+        color: white;
+        font-size: 1.2rem;
+        height: 42px;
+        &:hover {
+            background-color: transparent;
+            border: 2px solid  rgb(22, 82, 240);
+            color: unset;
+        }
+    }
+}

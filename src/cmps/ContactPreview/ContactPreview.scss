@@ -1,0 +1,20 @@
+.contact-preview {
+    margin-bottom: 1rem;
+    background-color: rgb(236, 236, 236);
+    border-radius: 10px;
+    padding: 10px 15px;
+    >* {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    >*:not(:last-child) {
+        margin-right: 15px;
+    }
+    h3 {
+        font-size: 1.3rem;
+    }
+    img {
+        width: 50px;
+        border-radius: 50%;
+    }
+}

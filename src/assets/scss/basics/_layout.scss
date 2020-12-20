@@ -1,0 +1,33 @@
+@import "../setup/variables";
+
+.container {
+    max-width: $wide-breakpoint;
+    margin: 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding: 20px;
+
+
+    @include for-mobile-layout {
+        max-width: $mobile-breakpoint;
+    }
+
+    @include for-tablet-layout {
+        max-width: $tablet-breakpoint;
+    }
+
+    @include for-normal-layout {
+        max-width: $normal-breakpoint;
+    }
+
+    @include for-wide-layout {
+        max-width: $wide-breakpoint;
+    }
+}
+
+// GRIDS
+.simple-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}

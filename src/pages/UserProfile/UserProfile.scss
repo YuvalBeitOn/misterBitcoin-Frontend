@@ -1,0 +1,25 @@
+.user-profile {
+  min-height: calc(100vh - 40px);
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  background-color: whitesmoke;
+
+  .user-profile-container {
+    width: 800px;
+  }
+
+  .move-list-container {
+    .moves-list {
+      height: fit-content;
+      max-height: 500px;
+      margin-top: unset;
+    }
+  }
+
+  .chart-container {
+      margin-top: 6rem;
+      .chart {
+          background-color: whitesmoke;
+      }
+  }
+}
