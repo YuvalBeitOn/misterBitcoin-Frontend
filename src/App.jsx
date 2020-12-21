@@ -1,12 +1,10 @@
-import "./assets/scss/global.scss";
+import './assets/scss/global.scss';
 import Routes from './routes'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import {AppHeader} from "./cmps/AppHeader/AppHeader";
-import AppFooter from "./cmps/AppFooter/AppFooter";
+import { AppHeader } from './cmps/AppHeader/AppHeader';
+import AppFooter from './cmps/AppFooter/AppFooter';
 
-
-
-export function App() {
+function App() {
   return (
     <div className="App">
       <Router>
@@ -19,3 +17,6 @@ export function App() {
     </div>
   );
 }
+
+export default App;
+

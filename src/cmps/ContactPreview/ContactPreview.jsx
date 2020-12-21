@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
 import './ContactPreview.scss'
-
+import React, { Component } from 'react'
 export default class ContactPreview extends Component {
     
     render() {

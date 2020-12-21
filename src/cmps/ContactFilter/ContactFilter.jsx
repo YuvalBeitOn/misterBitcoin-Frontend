@@ -1,7 +1,7 @@
 
-import React, { Component } from 'react'
 import './ContactFilter.scss'
-export class ContactFilter extends Component {
+import React, { Component } from 'react'
+export default class ContactFilter extends Component {
     state = {
         searchTerm: ''
     }
@@ -14,7 +14,6 @@ export class ContactFilter extends Component {
     }
 
     render() {
-        // console.log(this.props);
         const { searchTerm } = this.state
         return (
             <form className="contact-filter">

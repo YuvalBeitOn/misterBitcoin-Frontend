@@ -12,14 +12,14 @@
     .moves-list {
       height: fit-content;
       max-height: 500px;
-      margin-top: unset;
+      margin-top: 15px;
     }
   }
 
   .chart-container {
-      margin-top: 6rem;
-      .chart {
-          background-color: whitesmoke;
-      }
+    margin-top: 3rem;
+    .chart {
+      background-color: whitesmoke;
+    }
   }
 }

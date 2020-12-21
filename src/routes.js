@@ -1,12 +1,10 @@
-import {HomePage} from './pages/HomePage/HomePage'
+import HomePage from './pages/HomePage/HomePage'
 import ContactPage from './pages/ContactPage/ContactPage'
 import ContactDetailsPage from './pages/ContactDetailsPage/ContactDetailsPage'
 import StatisticPage from './pages/StatisticPage/StatisticPage'
 import ContactEditPage from './pages/ContactEditPage/ContactEditPage'
 import SignUpPage from './pages/SignUpPage/SignUpPage'
 import UserProfile from './pages/UserProfile/UserProfile'
-
-
 
 const Routes = [
     {

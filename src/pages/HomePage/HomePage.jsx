@@ -1,22 +1,23 @@
-import React from 'react'
+import './HomePage.scss'
+import React, { Component } from 'react'
 import { withRouter, NavLink } from 'react-router-dom';
-import { userService } from '../../services/UserService'
+import { connect } from 'react-redux';
+import { loadUser, addUser } from '../../store/actions/userActions'
 import { bitcoinService } from '../../services/BitcoinService'
 import { eventBus } from '../../services/eventBusService';
 import Chart from '../../cmps/Chart'
+import Converter from '../../cmps/Converter'
 import moment from 'moment'
 import img1 from '../../assets/img/img1.png'
 import img2 from '../../assets/img/img2.png'
 import img3 from '../../assets/img/img3.png'
 import bgImg from '../../assets/img/bg-img.png'
 
-import './HomePage.scss'
 
-class _HomePage extends React.Component {
+class _HomePage extends Component {
     mounted = false;
     state = {
         marketPrices: [],
-        user: null,
         name: ''
     }
 
@@ -27,14 +28,14 @@ class _HomePage extends React.Component {
     }
 
     async getUser() {
-        const user = await userService.getUser();
+        const user = await this.props.loadUser();
         if (!user) {
             console.log('no user!');
             this.props.history.push('/signup');
             return;
         }
         if (this.mounted && user) {
-            this.setState({ user })
+            const {user} = this.props
             eventBus.emit('user loggedIn', user)
         }
     }
@@ -59,14 +60,13 @@ class _HomePage extends React.Component {
     }
 
     onChangeInput = (ev) => {
-        console.log(ev);
         const { value } = ev.target;
         this.setState({ name: value });
     };
 
     async onSignUp() {
-        await userService.signup({ ...this.state })
-        this.props.history.push('/')
+        await this.props.addUser({ name: this.state.name })
+        this.props.history.push('/userProfile')
     }
 
     getStarted = (ev) => {
@@ -90,7 +90,6 @@ class _HomePage extends React.Component {
                     <div className="home-page-chart">
                         <Chart data={marketPrices} title="Market Price" color="rgb(22, 82, 240)" />
                     </div>
-
                 </section>
                 <div className="imgs-section flex space-around align-center container">
                     <div className="img-container flex column align-center">
@@ -106,6 +105,7 @@ class _HomePage extends React.Component {
                         <div className="desc">Start buying & selling</div>
                     </div>
                 </div>
+                <Converter></Converter>
                 <section className="bg-img-section">
                     <img className="bg-img" src={bgImg} alt="bg-img" />
                     <div className="bg-img-txt">
@@ -119,4 +119,18 @@ class _HomePage extends React.Component {
     }
 }
 
-export const HomePage = withRouter(_HomePage)
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.userReducer.user
+    };
+};
+
+const mapDispatchToProps = {
+    loadUser,
+    addUser
+};
+
+_HomePage = withRouter(_HomePage)
+
+export default connect(mapStateToProps, mapDispatchToProps)(_HomePage);

@@ -1,9 +1,9 @@
-import React from 'react'
+import './AppHeader.scss'
+import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { eventBus } from '../../services/eventBusService';
-import './AppHeader.scss'
 
-class _AppHeader extends React.Component {
+class _AppHeader extends Component {
 
     state = {
         user: null
@@ -11,7 +11,6 @@ class _AppHeader extends React.Component {
 
     componentDidMount() {
         eventBus.on('user loggedIn', (user) => {
-            console.log('user in app header:', user);
             if (user) this.setState({ user })
         })
     }
@@ -20,7 +19,7 @@ class _AppHeader extends React.Component {
         const { user } = this.state
         let profileLink;
         if (user) {
-            profileLink = <NavLink key={user._id} to="/userProfile">Profile</NavLink>
+            profileLink = <NavLink className="profile" key={user._id} to="/userProfile">Profile</NavLink>
         } else {
             profileLink = null
         }

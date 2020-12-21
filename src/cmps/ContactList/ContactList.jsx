@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom';
-import  ContactPreview  from '../ContactPreview/ContactPreview';
 import './ContactList.scss'
-export function ContactList({ contacts }) {
+import { Link } from 'react-router-dom';
+import ContactPreview  from '../ContactPreview';
+
+export default function ContactList({ contacts }) {
     return (
         <ul className="contact-list clean-list">
             {

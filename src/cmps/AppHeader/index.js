@@ -1,3 +1,1 @@
-import AppHeader from './AppHeader.jsx'
-
-export default AppHeader
+export { AppHeader } from './AppHeader'

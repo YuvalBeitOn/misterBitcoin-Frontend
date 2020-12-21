@@ -1,11 +1,14 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
 import './ContactEditPage.scss'
+import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { contactService } from "../../services/ContactService.js";
+import { getContactById, saveContact } from '../../store/actions/contactActions';
 
-export default class ContactEdit extends Component {
+
+class ContactEdit extends Component {
     state = {
         name: '',
         phone: '',
@@ -18,43 +21,43 @@ export default class ContactEdit extends Component {
 
     async componentDidMount() {
         const id = this.props.match.params.id;
-        let contact;
         if (id) {
-            contact = await contactService.getContactById(id)
+            await this.props.getContactById(id);
+            const { contact } = this.props
+            this.setState({ ...contact });
             this.setState({ isEditMode: true });
         } else {
-            contact = contactService.getEmptyContact()
+            let contact = contactService.getEmptyContact()
+            this.setState({ ...contact });
         }
-        this.setState({ ...contact });
     }
 
     validateForm = () => {
-        let validateName = '';
-        let validateEmail = '';
-
+        if (!this.state.phone) {
+            this.setState({ validatePhone: 'Phone is required' })
+            return false
+        }
         if (!this.state.name) {
-            validateName = 'Name is required'
+            this.setState({ validateName: 'Name is required' })
+            return false
         }
         if (!this.state.email || !this.state.email.includes('@') || !this.state.email.includes('.')) {
-            validateEmail = 'Email is invalide'
-        }
-        if (validateName || validateEmail) {
-            this.setState({ validateName, validateEmail })
+            this.setState({ validateEmail: 'Email is invalide' })
             return false
         }
         return true
     }
 
-    handleChange = (ev) => {
+    onChangeInput = (ev) => {
         const { value, name } = ev.target;
         this.setState({ [name]: value });
     };
 
-    saveContact = async (ev) => {
+    onSaveContact = async (ev) => {
         ev.preventDefault();
         const isValid = this.validateForm();
         if (isValid) {
-            const contact = await contactService.saveContact({ ...this.state });
+            const contact = await this.props.saveContact({ ...this.state });
             this.props.history.push(`/contact/${contact._id}`);
         }
     };
@@ -69,34 +72,35 @@ export default class ContactEdit extends Component {
         }
         return (
             <section className="contact-edit-page">
-                <form onSubmit={this.saveContact} className="contact-edit-form flex column align-center">
+                <form onSubmit={this.onSaveContact} className="contact-edit-form flex column align-center">
                     {img}
                     <div className="contact-form flex align-center">
                         <FontAwesomeIcon className="fa-icon" icon={faUser} />
                         <input
                             type="text"
-                            onChange={this.handleChange}
+                            onChange={this.onChangeInput}
                             value={name}
                             name="name"
                             placeholder="Enter Full Name"
                         />
                     </div>
-                    <span className="validation-error">{this.state.validateName}</span>
+                    <span className="validation-error ">{this.state.validateName}</span>
                     <div className="contact-form flex align-center">
                         <FontAwesomeIcon className="fa-icon" icon={faPhone} />
                         <input
                             type="text"
-                            onChange={this.handleChange}
+                            onChange={this.onChangeInput}
                             value={phone}
                             name="phone"
                             placeholder="Enter Phone Number"
                         />
                     </div>
+                    <span className="validation-error ">{this.state.validatePhone}</span>
                     <div className="contact-form flex align-center">
                         <FontAwesomeIcon className="fa-icon" icon={faEnvelope} />
                         <input
                             type="email"
-                            onChange={this.handleChange}
+                            onChange={this.onChangeInput}
                             value={email}
                             name="email"
                             placeholder="Entar Email"
@@ -105,11 +109,24 @@ export default class ContactEdit extends Component {
                     <span className="validation-error">{this.state.validateEmail}</span>
                     <div className="action-btns flex space-between">
                         <button formNoValidate type="submit" className="save-btn">Save</button>
-                        <Link to={`/contacts`}>Cancel</Link>
+                        <NavLink to={`/contacts`}>Cancel</NavLink>
                     </div>
                 </form>
             </section>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        contact: state.contactReducer.contact,
+     };
+};
+
+const mapDispatchToProps = {
+    getContactById,
+    saveContact
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactEdit);
 

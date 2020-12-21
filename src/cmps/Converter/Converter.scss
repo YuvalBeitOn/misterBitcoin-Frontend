@@ -1,0 +1,69 @@
+.converter-container {
+  margin: 3rem 0 5rem 0;
+  .convert-form {
+    height: 300px;
+    border: 2px solid #eee;
+    border-radius: 5px;
+
+    padding: 10px 15px;
+    width: fit-content;
+    font-size: 2rem;
+    input,
+    select,
+    .from-currency {
+      font-size: 2rem;
+      padding: 8px 12px;
+      outline: none;
+      border: none;
+      background-color: #eee;
+      border-radius: 4px;
+      color: #444;
+      cursor: pointer;
+    }
+
+    input::placeholder {
+      color: #444;
+    }
+
+    .fa-icon,
+    input,
+    .from-currency {
+      margin-right: 15px;
+    }
+
+    .fa-icon {
+      color: #15a2db;
+      font-size: 2.4rem;
+    }
+    button {
+      border: 1px #15a2db solid;
+      color: #15a2db;
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 1.2em;
+      font-family: inherit;
+      opacity: 0.4;
+      border-radius: 4px;
+      color: #444;
+    }
+    .validation-error {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: red;
+      }
+
+      .result {
+          font-weight: bold;
+          .given-amount, .final-result{
+              margin-right: 5px;
+          }
+          .base-currency {
+            margin-right: 10px;
+          }
+          .fa-icon {
+            color: #444;
+            font-size: 2rem;
+        }
+      }
+  }
+}

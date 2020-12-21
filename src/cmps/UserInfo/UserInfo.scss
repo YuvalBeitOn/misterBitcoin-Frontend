@@ -1,21 +1,27 @@
 .user-info {
-height: 500px;
-padding: 0 15px 15px 15px;
-.user-img {
-        width: 200px;
-        border-radius: 10px;
-        margin-bottom: 2rem;
-    }
-    .user-title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        font-weight: bold;
-    }
+  height: 500px;
+  padding: 0 15px 15px 15px;
+  .user-img {
+    width: 200px;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    align-self: center;
+  }
+  .user-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+  .coins-txt {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
     .coins-img {
-        width: 20px;
+      width: 30px;
+      margin-right: 8px;
     }
-    .coins-txt {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
+    .coin-txt {
+      font-weight: bold;
+      margin-right: 8px;
     }
+  }
 }

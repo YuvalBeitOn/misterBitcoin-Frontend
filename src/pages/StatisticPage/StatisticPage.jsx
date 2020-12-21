@@ -1,8 +1,8 @@
+import './StatisticPage.scss'
 import React, { Component } from 'react'
 import Chart from '../../cmps/Chart'
-import { bitcoinService } from '../../services/BitcoinService'
 import moment from 'moment'
-import './StatisticPage.scss'
+import { bitcoinService } from '../../services/BitcoinService'
 export default class StatisticPage extends Component {
 
     state = {
@@ -19,7 +19,7 @@ export default class StatisticPage extends Component {
             localStorage.setItem("marketPrices", JSON.stringify(marketPrices));
         }
         marketPrices = marketPrices.values.map(value => {
-            value.x = value.x *1000;
+            value.x = value.x * 1000;
             value.x = moment(value.x).format('MMM Do');
             return value
         })
@@ -31,7 +31,7 @@ export default class StatisticPage extends Component {
             localStorage.setItem("confirmedTrans", JSON.stringify(confirmedTrans));
         }
         confirmedTrans = confirmedTrans.values.map(value => {
-            value.x = value.x *1000;
+            value.x = value.x * 1000;
             value.x = moment(value.x).format('MMM Do');
             return value
         })
@@ -43,7 +43,7 @@ export default class StatisticPage extends Component {
             localStorage.setItem("tradeVolume", JSON.stringify(tradeVolume));
         }
         tradeVolume = tradeVolume.values.map(value => {
-            value.x = value.x *1000;
+            value.x = value.x * 1000;
             value.x = moment(value.x).format('MMM Do');
             return value
         })
@@ -54,7 +54,7 @@ export default class StatisticPage extends Component {
     render() {
         return (
             <div className="statistcs-page flex column justify-center align-center">
-                <h2 className="statistcs-title">Bitcoins Statistcs</h2>
+                <h2 className="statistcs-title">Bitcoin Statistcs</h2>
                 <div className="chart1-container">
                     <Chart className="market-price-chart" data={this.state.marketPrices} title="Market Price" desc="The average USD market price across major bitcoin exchanges." color="pink" />
                 </div>

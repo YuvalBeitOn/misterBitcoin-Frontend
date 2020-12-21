@@ -1,10 +1,11 @@
+import './Chart.scss'
 import React from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
-import './Chart.scss'
 
 export default function Chart({ data, title, color, desc }) {
+    if (data.length < 2) return null
     return (
-        <div className="chart flex column align-center">
+      <div className="chart flex column align-center">
             <h2>{title}</h2>
             <h4 className="desc">{desc}</h4>
             <LineChart class="line-chart" width={1000} height={250} data={data}

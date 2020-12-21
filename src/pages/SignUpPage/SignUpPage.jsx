@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
-import { userService } from "../../services/UserService";
 import './SignUpPage.scss'
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { addUser } from '../../store/actions/userActions'
 import bitcoinImg from '../../assets/img/bitcoin.png'
 
-export default class SignUpPage extends Component {
+class SignUpPage extends Component {
     state = {
         name: '',
     }
 
     onChangeInput = (ev) => {
-        console.log(ev);
         const { value } = ev.target;
         this.setState({ name: value });
     };
 
     onSignUp = async (ev) => {
         ev.preventDefault();
-        await userService.signup({ ...this.state })
+        await this.props.addUser({ ...this.state })
         this.props.history.push('/')
     }
 
@@ -42,3 +42,8 @@ export default class SignUpPage extends Component {
     }
 }
 
+const mapDispatchToProps = {
+    addUser
+};
+
+export default connect(null, mapDispatchToProps)(SignUpPage);

@@ -1,49 +1,42 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import { contactService } from '../../services/ContactService'
-import { userService } from '../../services/UserService'
-import TransferFund from '../../cmps/TransferFund/TransferFund'
-import MoveList from '../../cmps/MovesList/MovesList'
-
-
 import './ContactDetailsPage.scss'
-export default class ContactDetailsPage extends Component {
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { getContactById, deleteContact } from '../../store/actions/contactActions';
+import { loadUser, addMove } from '../../store/actions/userActions'
+import TransferFund from '../../cmps/TransferFund'
+import MoveList from '../../cmps/MovesList'
 
-    state = {
-        contact: null,
-        user: null
-    }
+class ContactDetailsPage extends Component {
 
     async componentDidMount() {
         const { contactId } = this.props.match.params
         if (contactId) {
-            const contact = await contactService.getContactById(contactId)
-            this.setState({ contact })
+            await this.props.getContactById(contactId);
         }
-        const user = await userService.getUser();
-        this.setState({ user })
+        await this.props.loadUser();
     }
 
-    deleteContact = () => {
+    deleteContact = async () => {
         const { contactId } = this.props.match.params
-        // console.log('contactId:', contactId);
-        contactService.deleteContact(contactId)
-        contactService.getContacts()
+        await this.props.deleteContact(contactId)
         this.props.history.push('/contacts');
     }
 
     transferFund = async (fund) => {
         const move = {
-            toId: this.state.contact._id,
-            to: this.state.contact.name,
+            toId: this.props.contact._id,
+            to: this.props.contact.name,
             amount: fund,
             at: Date.now(),
         };
-        await userService.addMove(move);
+        await this.props.addMove(move);
+        await this.props.loadUser();
     };
 
     render() {
-        const { contact, user } = this.state
+        const { user } = this.props
+        const { contact } = this.props
         if (!user || !contact) return <div>Loading...</div>
         return (
             <section className="contact-details-page flex justify-center">
@@ -56,8 +49,8 @@ export default class ContactDetailsPage extends Component {
                         <span>Phone: {contact.phone}</span>
                     </div>
                     <div className="btns-section">
-                        <Link to="/contacts">Back</Link>
-                        <Link key={contact._id} to={`/contact/edit/${contact._id}`}>Edit</Link>
+                        <NavLink to="/contacts">Back</NavLink>
+                        <NavLink key={contact._id} to={`/contact/edit/${contact._id}`}>Edit</NavLink>
                         <button onClick={this.deleteContact}>Delete</button>
                     </div>
                 </div>
@@ -73,3 +66,20 @@ export default class ContactDetailsPage extends Component {
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        contact: state.contactReducer.contact,
+        user: state.userReducer.user
+    };
+};
+
+const mapDispatchToProps = {
+    getContactById,
+    deleteContact,
+    loadUser,
+    addMove
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactDetailsPage);

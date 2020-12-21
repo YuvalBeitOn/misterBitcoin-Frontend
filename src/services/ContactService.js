@@ -1,9 +1,3 @@
-import userImg1 from '../assets/img/user1.png'
-import userImg2 from '../assets/img/user2.png'
-import userImg3 from '../assets/img/user3.png'
-import userImg4 from '../assets/img/user4.png'
-import userImg5 from '../assets/img/user5.png'
-
 export const contactService = {
   getContacts,
   getContactById,
@@ -12,7 +6,7 @@ export const contactService = {
   getEmptyContact
 }
 
-const contacts = [
+const gContacts = [
   {
     "_id": "5a56640269f443a5d64b32ca",
     "name": "Ochoa Hyde",
@@ -130,11 +124,9 @@ const contacts = [
   }
 ];
 
-const usersImg = [userImg1, userImg2, userImg3, userImg4, userImg5]
-
 function addImgToContact() {
-  contacts.forEach(contact => {
-    contact.imgUrl = usersImg[Math.floor(Math.random() * 5)];
+  gContacts.forEach(contact => {
+    contact.imgUrl = `https://robohash.org/${contact.name}?set=set5`
   });
 }
 
@@ -142,21 +134,20 @@ addImgToContact()
 
 function getContacts(filterBy = null) {
   return new Promise((resolve, reject) => {
-    let contactsToReturn = JSON.parse(localStorage.getItem("contacts"));
-    if (!contactsToReturn) {
-      contactsToReturn = contacts;
-      localStorage.setItem("contacts", JSON.stringify(contactsToReturn));
+    let contacts = JSON.parse(localStorage.getItem('contacts'));
+    if (!contacts) {
+      contacts = gContacts;
+      localStorage.setItem('contacts', JSON.stringify(contacts));
     }
     if (filterBy) {
-      contactsToReturn = filter(filterBy.searchTerm, contactsToReturn);
+      contacts = filter(filterBy.searchTerm, contacts);
     }
-    resolve(sort(contactsToReturn));
+    resolve(sort(contacts));
   });
 }
 
 function filter(term, contacts) {
   term = term.toLocaleLowerCase();
-  console.log(term);
   return contacts.filter((contact) => {
     return (
       contact.name.toLocaleLowerCase().includes(term) ||
@@ -178,49 +169,48 @@ function sort(arr) {
 
     return 0;
   });
-} 
-
-
+}
 
 function getContactById(id) {
   return new Promise((resolve, reject) => {
-    let contacts = JSON.parse(localStorage.getItem("contacts"));
+    let contacts = JSON.parse(localStorage.getItem('contacts'));
     const contact = contacts.find((contact) => contact._id === id);
+    console.log('contact in getContact in service:', contact);
     contact ? resolve(contact) : reject(`Contact id ${id} not found!`);
   });
 }
 
 function deleteContact(id) {
   return new Promise((resolve, reject) => {
-    let contacts = JSON.parse(localStorage.getItem("contacts"));
+    let contacts = JSON.parse(localStorage.getItem('contacts'));
     const idx = contacts.findIndex((contact) => contact._id === id);
     if (idx !== -1) {
       contacts.splice(idx, 1);
     }
-    localStorage.setItem("contacts", JSON.stringify(contacts));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
     resolve(contacts);
   });
 }
 
 function _updateContact(contact) {
   return new Promise((resolve, reject) => {
-    let contacts = JSON.parse(localStorage.getItem("contacts"));
+    let contacts = JSON.parse(localStorage.getItem('contacts'));
     const idx = contacts.findIndex((c) => contact._id === c._id);
     if (idx !== -1) {
       contacts[idx] = contact;
     }
-    localStorage.setItem("contacts", JSON.stringify(contacts));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
     resolve(contact);
   });
 }
 
 function _addContact(contact) {
   return new Promise((resolve, reject) => {
-    let contacts = JSON.parse(localStorage.getItem("contacts"));
+    let contacts = JSON.parse(localStorage.getItem('contacts'));
     contact._id = _makeId();
-    contact.imgUrl = usersImg[Math.floor(Math.random() * 5)];
+    contact.imgUrl = `https://robohash.org/${contact._id}?set=set5`
     contacts.push(contact);
-    localStorage.setItem("contacts", JSON.stringify(contacts));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
     resolve(contact);
   });
 }
@@ -231,17 +221,17 @@ function saveContact(contact) {
 
 function getEmptyContact() {
   return {
-    name: "",
-    email: "",
-    phone: "",
+    name: '',
+    email: '',
+    phone: '',
   };
 }
 
 
 function _makeId(length = 10) {
-  let txt = "";
+  let txt = '';
   let possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   for (let i = 0; i < length; i++) {
     txt += possible.charAt(Math.floor(Math.random() * possible.length));
   }

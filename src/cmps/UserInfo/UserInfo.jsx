@@ -11,8 +11,8 @@ export default function UserInfo(props) {
         <div className="user-info flex column">
             <img className="user-img" src={user.imgUrl} alt="user-img" />
             <span className="user-title">Hello {user.name}!</span>
-            <span className="coins-txt"><img className="coins-img" src={usdImg} alt="usd-img"></img> <strong>USD: </strong> {userUsdRate}</span>
-            <span className="coins-txt"><img className="coins-img" src={bitcoinImg} alt="bitcoin-img"></img> <strong>BTC: </strong> {user.coins}</span>
+            <span className="coins-txt flex align-center"><img className="coins-img" src={usdImg} alt="usd-img"></img> <span className="coin-txt">USD: </span> {userUsdRate}</span>
+            <span className="coins-txt flex align-center"><img className="coins-img" src={bitcoinImg} alt="bitcoin-img"></img> <span className="coin-txt">BTC: </span> {user.coins}</span>
         </div>
     )
 }

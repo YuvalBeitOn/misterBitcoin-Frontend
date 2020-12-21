@@ -4,7 +4,8 @@ import './TransferFund.scss'
 export default class TransferFund extends Component {
     state = {
         fund: '',
-        userMsg: '',
+        errMsg: '',
+        successMsg: ''
     };
 
     onTransferFund = (ev) => {
@@ -19,7 +20,7 @@ export default class TransferFund extends Component {
             return;
         }
         this.props.transferFund(fund);
-        this.sendUserMsg(`Successful transfer`);
+        this.sendUserMsg("Successful transfer");
         this.setState({ fund: '' });
     };
 
@@ -29,17 +30,15 @@ export default class TransferFund extends Component {
     };
 
     sendUserMsg = (msg) => {
-        this.setState({ userMsg: msg });
+        if (msg !== "Successful transfer") this.setState({ errMsg: msg });
+        else this.setState({ successMsg: msg });
         setTimeout(() => {
-            this.setState({ userMsg: null });
+            this.setState({ errMsg: null, successMsg: null });
         }, 3000);
     };
 
     render() {
-        const {userMsg} = this.state
-        let msg;
-        if (userMsg) msg = <div className="user-msg">{this.state.userMsg}</div>
-        else msg = null
+        const { errMsg, successMsg } = this.state
         return (
             <section className="transfer-fund flex column">
                 <span className="transfer-title">Transfer coins to {this.props.contactName}: </span>
@@ -53,7 +52,8 @@ export default class TransferFund extends Component {
                     />
                     <button type="submit" className="transfer-btn">Transfer</button>
                 </form>
-                {msg}
+                {errMsg && <div className="user-msg err-msg">{errMsg}</div>}
+                {successMsg && <div className="user-msg success-msg">{successMsg}</div>}
             </section>
         );
     }

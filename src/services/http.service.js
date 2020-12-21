@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
-const BASE_URL = 
-process.env.NODE_ENV === "production" ? "/api/" : "//localhost:3030/api/";
+const BASE_URL =
+  process.env.NODE_ENV === "production" ? "/api/" : "//localhost:3030/api/";
 
 var axios = Axios.create({
   withCredentials: true
@@ -31,7 +31,7 @@ async function ajax(endpoint, method = 'get', data = null) {
     })
     return res.data
   } catch (err) {
-console.log('Error from HTTPSERVICE')
+    console.log('Error from HTTPSERVICE')
     throw err
   }
 }
