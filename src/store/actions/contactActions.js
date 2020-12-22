@@ -1,13 +1,13 @@
 import {contactService} from "../../services/ContactService";
 
-// LIST
 export function loadContacts(filterBy) {
     return async (dispatch) => {
         const contacts = await contactService.getContacts(filterBy);
         dispatch({ type: "SET_CONTACTS", contacts });
     };
 }
-// READ
+
+
 export function getContactById(id) {
     return async (dispatch) => {
         const contact = await contactService.getContactById(id);
@@ -15,7 +15,7 @@ export function getContactById(id) {
     };
 }
 
-// UPDATE + CREATE
+
 export function saveContact(contact) {
     return async dispatch => {
         const isEdit = contact._id ? true : false;
@@ -26,7 +26,7 @@ export function saveContact(contact) {
     }
 }
 
-// REMOVE
+
 export function deleteContact(id) {
     return async dispatch => {
         await contactService.deleteContact(id);

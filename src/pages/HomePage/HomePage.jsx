@@ -66,7 +66,7 @@ class _HomePage extends Component {
 
     async onSignUp() {
         await this.props.addUser({ name: this.state.name })
-        this.props.history.push('/userProfile')
+        // this.props.history.push('/userProfile')
     }
 
     getStarted = (ev) => {
@@ -84,13 +84,13 @@ class _HomePage extends Component {
                     <h2 className="title">Buy and sell Bitcoins</h2>
                     <div className="desc">Mr Bitcoin is the easiest place to buy, sell, and manage your Bitcoins.</div>
                     <form onSubmit={this.getStarted}>
-                        <input placeholder="Email Full Name" value={this.state.name} type="text" onChange={this.onChangeInput}></input>
+                        <input placeholder="Enter Full Name" value={this.state.name} type="text" onChange={this.onChangeInput}></input>
                         <button type="submit">Get Started</button>
                     </form>
-                    <div className="home-page-chart">
+                </section>
+                    <div className="home-page-chart flex justify-center align-center">
                         <Chart data={marketPrices} title="Market Price" color="rgb(22, 82, 240)" />
                     </div>
-                </section>
                 <div className="imgs-section flex space-around align-center container">
                     <div className="img-container flex column align-center">
                         <img src={img1} alt="" />

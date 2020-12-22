@@ -5,6 +5,10 @@ import { AppHeader } from './cmps/AppHeader/AppHeader';
 import AppFooter from './cmps/AppFooter/AppFooter';
 
 function App() {
+
+  window.addEventListener('offline', function () { console.log('offline'); });
+  window.addEventListener('online', function () { console.log('online'); });
+
   return (
     <div className="App">
       <Router>

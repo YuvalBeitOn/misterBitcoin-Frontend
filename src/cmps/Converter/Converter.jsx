@@ -10,32 +10,32 @@ export default class Converter extends Component {
         toCurr: 'USD',
         res: null,
         errMsg: ''
-
     }
 
     onConvert = async (ev) => {
         ev.preventDefault()
         if (!this.state.bitcoin) {
-            this.setState({errMsg: 'Amount is required'})
+            this.setState({ errMsg: 'Amount is required' })
             setTimeout(() => {
                 this.setState({ errMsg: null });
             }, 2000);
             return;
         }
-        const { bitcoin, coin } = this.state
-        const rate = await bitcoinService.getRate(coin)
+        const { bitcoin, toCurr } = this.state
+        console.log('bitcoin, toCurr:', bitcoin, toCurr);
+        let rate;
+        if (navigator.onLine) rate = await bitcoinService.getRate(toCurr)
+        else rate = JSON.parse(localStorage.getItem('rate'));
+        console.log('rate:', rate);
         const res = (1 / +rate * +bitcoin).toFixed(5)
+        console.log('res:', res);
         this.setState({ res });
+
     }
 
-    onChangeInput = (ev) => {
-        const { value, name } = ev.target;
-        this.setState({ [name]: +value });
-    };
-
-    onChangeSelect = (ev) => {
-        const { value, name } = ev.target;
-        this.setState({ [name]: value });
+    handleChange = (ev) => {
+        const { value, name, type } = ev.target;
+        this.setState({ [name]: type === 'number' ? +value : value });
     };
 
     render() {
@@ -46,29 +46,29 @@ export default class Converter extends Component {
                     <div>
                         <input
                             type="number"
-                            onChange={this.onChangeInput}
+                            onChange={this.handleChange}
                             value={bitcoin}
                             name="bitcoin"
                             placeholder="Enter amount"
                         />
                         <span className="from-currency">BTC</span>
                         <FontAwesomeIcon className="fa-icon" icon={faArrowRight} />
-                        <select className="form-control" name="toCurr" onChange={this.onChangeSelect} required>
+                        <select className="form-control" type="text" name="toCurr" onChange={this.handleChange} required>
                             <option>USD</option>
                             <option>GBP</option>
                             <option>EUR</option>
                             <option>CAD</option>
                         </select>
                     </div>
-                    <span className="validation-error">{ this.state.errMsg }</span>
-                {res &&
-                    <div className="result">
-                        <span className="given-amount">{bitcoin}</span>
-                        <span className="base-currency">BTC</span>
-                        <FontAwesomeIcon className="fa-icon" icon={faArrowRight} />
-                        <span className="final-result">{res}</span>
-                        <span className="second-currency">{toCurr}</span>
-                    </div>}
+                    <span className="validation-error">{this.state.errMsg}</span>
+                    {res &&
+                        <div className="result">
+                            <span className="given-amount">{bitcoin}</span>
+                            <span className="base-currency">BTC</span>
+                            <FontAwesomeIcon className="fa-icon" icon={faArrowRight} />
+                            <span className="final-result">{res}</span>
+                            <span className="second-currency">{toCurr}</span>
+                        </div>}
                     <button className="calculate-btn" type="submit">Convert</button>
                 </form>
             </section>

@@ -18,7 +18,11 @@
       background-color: #eee;
       border-radius: 4px;
       color: #444;
-      cursor: pointer;
+    }
+
+    select, button {
+        cursor: pointer;
+
     }
 
     input::placeholder {

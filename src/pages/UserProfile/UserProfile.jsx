@@ -14,7 +14,9 @@ class UserProfile extends Component {
 
     async componentDidMount() {
         await this.props.loadUser();
-        const rate = await bitcoinService.getRate();
+        let rate;
+        if (navigator.onLine) rate = await bitcoinService.getRate()
+        else rate = JSON.parse(localStorage.getItem('rate')); 
         this.setState({ rate })
     }
 
